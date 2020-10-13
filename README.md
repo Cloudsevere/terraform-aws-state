@@ -3,9 +3,9 @@ Initial Infrastructure for managing the Terraform State remotely.
 The Terraform state of this Repository is not stored remotely but locally within this repository.
 It does expose some sensitive information, however those are not usable to interact with the state.
 
-To run this Terraform script, it is recommended to have a separate Terraform IAM Group which has access to the following ressources:
+To run this Terraform script, it is recommended to have a separate Terraform IAM Group which has access to dynamodb and s3 ressources:
 
-```json
+```
 {
   "Version": "2012-10-17",
   "Statement": [
