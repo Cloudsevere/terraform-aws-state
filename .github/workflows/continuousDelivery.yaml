@@ -1,0 +1,44 @@
+name: Terraform Deploy
+
+on: 
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  plan:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code  
+      uses: actions/checkout@v2
+          
+    - name: Run a Terraform init  
+      uses: docker://hashicorp/terraform:0.12.26
+      with:
+        entrypoint: terraform
+        args: init
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+        
+    - name: Run a Terraform plan    
+      uses: docker://hashicorp/terraform:0.12.26
+      with:
+        entrypoint: terraform
+        args: plan
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+
+    - name: Run a Terraform apply
+      uses: docker://hashicorp/terraform:0.12.26
+      with:
+        entrypoint: terraform
+        args: apply -auto-approve
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
