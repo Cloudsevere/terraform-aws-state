@@ -1,8 +1,4 @@
 # terraform state file setup
-
-
-
-
 # Configure the AWS Provider
 provider "aws" {
   version = "~> 2.0"
